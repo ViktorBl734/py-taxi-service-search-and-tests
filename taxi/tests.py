@@ -92,7 +92,9 @@ class DriverSearchTests(TestCase):
         self.assertNotContains(response, "driver_two")
 
     def test_search_driver_no_results(self):
-        response = self.client.get(reverse("taxi:driver-list") + "?username=unknown")
+        response = self.client.get(
+            reverse("taxi:driver-list") + "?username=unknown"
+        )
         self.assertNotContains(response, "driver_one")
         self.assertNotContains(response, "driver_two")
 
@@ -113,7 +115,9 @@ class ManufacturerSearchTests(TestCase):
         self.man2 = Manufacturer.objects.create(name="Test2", country="CRR")
 
     def test_search_manufacturer_by_name(self):
-        response = self.client.get(reverse("taxi:manufacturer-list") + "?name=Test1")
+        response = self.client.get(
+            reverse("taxi:manufacturer-list") + "?name=Test1"
+        )
         self.assertContains(response, "Test1")
         self.assertNotContains(response, "Test2")
 
@@ -130,6 +134,6 @@ class CarSearchTests(TestCase):
         self.car2 = Car.objects.create(model="Test2", manufacturer=man2)
 
     def test_search_car_by_name(self):
-        response = self.client.get(reverse("taxi:car-list") + "?model_=Test1")
+        response = self.client.get(reverse("taxi:car-list") + "?model=Test1")
         self.assertContains(response, "Test1")
         self.assertNotContains(response, "Test2")

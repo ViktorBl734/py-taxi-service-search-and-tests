@@ -6,8 +6,10 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Driver, Car, Manufacturer
-from .forms import DriverCreationForm, DriverLicenseUpdateForm, CarForm, DriverUsernameSearchForm, CarModelSearchForm, \
-    ManufacturerNameSearchForm
+from .forms import (DriverCreationForm, DriverLicenseUpdateForm,
+                    CarForm, DriverUsernameSearchForm,
+                    CarModelSearchForm,
+                    ManufacturerNameSearchForm)
 
 
 @login_required
@@ -78,9 +80,9 @@ class CarListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        model_ = self.request.GET.get("model_")
-        if model_:
-            return self.queryset.filter(model__icontains=model_)
+        model = self.request.GET.get("model")
+        if model:
+            return self.queryset.filter(model__icontains=model)
         return self.queryset
 
 
@@ -140,7 +142,7 @@ class DriverLicenseUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 class DriverDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Driver
-    success_url = reverse_lazy("")
+    success_url = reverse_lazy("taxi:driver-list")
 
 
 @login_required
